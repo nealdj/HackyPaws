@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HackyPaws Login</title>
+    <link rel="stylesheet" href="/static/css/pico.min.css" />
+    <link rel="stylesheet" href="/static/css/hackypaws.css" />
+  </head>
+  <body>
+    <header class="container">
+      <hgroup>
+        <h1>HackyPaws Pet Adoption</h1>
+        <p>Where Every Paw is Protected</p>
+        <hr class="rounded-divider">
+      </hgroup>
+        <h2>Admin Login</h2>
+        <form action="/auth/login" method="post">
+          <div class="grid">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              aria-label="Username"
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              aria-label="password"
+              required
+            />
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </header>
+  </body>
+</html>

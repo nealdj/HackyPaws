@@ -1,0 +1,9 @@
+hr.rounded-divider {
+    border-top: 9px solid #bbb;
+    border-radius: 5px;
+}
+
+hr.rounded-divider-small {
+    border-top: 2px solid #bbb;
+    border-radius: 5px;
+}
