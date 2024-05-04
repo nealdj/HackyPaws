@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="/static/css/hackypaws.css" />
   </head>
   <body>
+    <script>
+      // Function to check login errors
+      function checkLogin() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const loginParam = urlParams.get('login');
+          if (loginParam !== null && loginParam.toLowerCase() === 'false') {
+              alert("Login failed! Please try again.");
+          }
+      }
+      
+      // Check login status onload
+      window.onload = checkLogin;
+      </script>
     <header class="container">
       <hgroup>
         <h1>HackyPaws Pet Adoption</h1>
