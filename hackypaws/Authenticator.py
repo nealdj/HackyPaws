@@ -1,3 +1,4 @@
+from werkzeug.datastructures import MultiDict 
 import datetime, hashlib, hmac
 import sqlite3 as sql
 
@@ -12,10 +13,18 @@ class Authenticator:
         hmac_value = hmac.new(auth_secret, username.encode('utf-8'), hashlib.sha256).hexdigest()
         return hmac_value
 
-    def validate_session(token, username):
+    def validate_session(cookie_data):
         '''
         Validates if user token was generated from our site
         '''
+        cookies = MultiDict(cookie_data)
+        try:
+            token = cookies['session']
+            username = cookies['username']
+        except KeyError:
+            # User is missing cookies
+            return False
+            
         auth_secret = str(datetime.date.today()).encode('utf-8')
         username_bytes = username.encode('utf-8')
         hmac_digest = hmac.new(auth_secret, username_bytes, hashlib.sha256).hexdigest()

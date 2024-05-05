@@ -18,5 +18,6 @@ def login():
         session = Authenticator.generate_session(data.get('username'))
         resp = redirect("/admin/")
         resp.set_cookie('session', session)
+        resp.set_cookie('username', data.get('username'))
         return resp
     
