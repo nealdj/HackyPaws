@@ -14,29 +14,36 @@
         <hr class="rounded-divider">
       </hgroup>
       <div class="grid">
-        <div>
-          <h4>Pupper 1</h4>
-          <p>this is a good dog</p>
-          <button class="contrast">Adopt Me!</button>
-          <br><br>
-          <img
-            src="/static/img/hacker-dh.png"
-            alt="Minimal landscape"
-          />
-          <hr class="rounded-divider-small">
-        </div>
-        <div>
-          <h4>Pupper 2</h4>
-          <p>this is a good dog</p>
-          <button class="contrast">Adopt Me!</button>
-          <br><br>
-          <img
-            src="/static/img/chiween.png"
-            alt="Minimal landscape"
-          />
-          <hr class="rounded-divider-small">
-        </div>
-        
+        {% for paw in paws%}
+          {% if paws[paw]['id'] is not divisibleby(2) %}
+          <div>
+            <h4>{{ paws[paw]['name'] }}</h4>
+            <p>{{ paws[paw]['description']|truncate(60,true,'') }}...</p>
+            <a href="/paws/{{ paws[paw]['id'] }}"><button class="outline">Adopt Me!</button></a>
+            <br><br>
+            <img
+              src="/{{ paws[paw]['profile_pic'] }}"
+            />
+            <hr class="rounded-divider-small">
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="grid">
+        {% for paw in paws%}
+          {% if paws[paw]['id'] is divisibleby(2) %}
+          <div>
+            <h4>{{ paws[paw]['name'] }}</h4>
+            <p>{{ paws[paw]['description']|truncate(60,true,'') }}...</p>
+            <a href="/paws/{{ paws[paw]['id'] }}"><button class="outline">Adopt Me!</button></a>
+            <br><br>
+            <img
+              src="/{{ paws[paw]['profile_pic'] }}"
+            />
+            <hr class="rounded-divider-small">
+          </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </header>
   </body>

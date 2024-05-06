@@ -16,19 +16,38 @@
       <a href="new_paw"><button class="primary">Submit New Paw</button></a>
       <hr class="rounded-divider">
       <div class="grid">
-        <div>
-          <h4>Pupper 1</h4>
-          <p>this is a good dog</p>
-          <button class="contrast">Edit</button>
-          <button class="contrast">Delete</button>
-          <br><br>
-          <img
-            src="/static/img/hacker-dh.png"
-            alt="Minimal landscape"
-          />
-          <hr class="rounded-divider-small">
-        </div>
+      {% for paw in paws%}
+      {% if paws[paw]['id'] is not divisibleby(2) %}
+      <div>
+        <h4>{{ paws[paw]['name'] }}</h4>
+        <p>{{ paws[paw]['description']|truncate(60,true,'') }}...</p>
+        <a href="edit/{{ paws[paw]['id'] }}"><button class="outline">Edit</button></a>
+        <a href="delete/{{ paws[paw]['id'] }}"><button class="secondary outline">Delete</button></a>
+        <br><br>
+        <img
+          src="/{{ paws[paw]['profile_pic'] }}"
+        />
+        <hr class="rounded-divider-small">
       </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="grid">
+    {% for paw in paws%}
+      {% if paws[paw]['id'] is divisibleby(2) %}
+      <div>
+        <h4>{{ paws[paw]['name'] }}</h4>
+        <p>{{ paws[paw]['description']|truncate(60,true,'') }}...</p>
+        <a href="edit/{{ paws[paw]['id'] }}"><button class="outline">Edit</button></a>
+        <a href="delete/{{ paws[paw]['id'] }}"><button class="secondary outline">Delete</button></a>
+        <br><br>
+        <img
+          src="/{{ paws[paw]['profile_pic'] }}"
+        />
+        <hr class="rounded-divider-small">
+      </div>
+      {% endif %}
+    {% endfor %}
     </header>
   </body>
 </html>
