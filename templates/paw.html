@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HackyPaws</title>
+    <link rel="stylesheet" href="/static/css/pico.min.css" />
+    <link rel="stylesheet" href="/static/css/hackypaws.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  </head>
+  <body>
+    <header class="container">
+      <hgroup>
+        <h1>HackyPaws Pet Adoption</h1>
+        <p>Where Every Paw is Protected</p>
+        <hr class="rounded-divider">
+      </hgroup>
+      <h1>{{ paw['name'] }}</h1>
+      <mark><small>{{ tagline|safe }}</small></mark>
+      <hr>
+      <p>{{ paw['description'] }}</p>
+      <br>
+      <img width="50%" src="/{{paw['profile_pic']}}">
+    </header>
+  </body>
+</html>

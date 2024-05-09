@@ -1,6 +1,17 @@
 import sqlite3 as sql
 
 class Paws:
+
+    def sanitize_string(unsafe_string):
+        '''
+        Makes a string safe for use within the application
+        '''
+        unsafe_characters = {
+            '<': None,'>': None,
+            }
+        translation_table = str.maketrans(unsafe_characters)
+        return unsafe_string.translate(translation_table)
+
     def add_profile(name, uploaded_by, description, animal, profile_pic):
         '''
         Adds a single paw profile to the database and links the uploaded profile pic
@@ -21,10 +32,13 @@ class Paws:
         con = sql.connect("hackypaws.db")
         cur = con.cursor()
         get_profile_sql = '''SELECT paw_id, uploaded_by, name, description, animal, profile_pic FROM paws
-         WHERE paw_id = ?;'''
-        cur.execute(get_profile_sql, (id))
-        profile = cur.fetchone()
-        con.close()
+         WHERE paw_id = ?'''
+        try:
+            cur.execute(get_profile_sql, [id])
+            profile = cur.fetchone()
+            con.close()
+        except sql.ProgrammingError:
+            return False
         return {
             "id": profile[0],
             "uploaded_by": profile[1],
@@ -65,7 +79,16 @@ class Paws:
         con.commit()
         con.close()
         return True
-
+    
+    def generate_tagline(paw):
+        '''
+        Creates tagline for paws
+        '''
+        uploaded_by = Paws.sanitize_string(paw['uploaded_by'])
+        animal = Paws.sanitize_string(paw['animal'])
+        tagline = f"{ animal } uploaded by { uploaded_by }"
+        return tagline
+    
     def allowed_picture(filename):
         '''
         Only allow safe file extensions for paw pictures
