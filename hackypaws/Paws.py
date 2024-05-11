@@ -75,10 +75,39 @@ class Paws:
         con = sql.connect("hackypaws.db")
         cur = con.cursor()
         delete_profile_sql = 'DELETE from paws WHERE paw_id = ?;'
-        cur.execute(delete_profile_sql, (id))
+        cur.execute(delete_profile_sql, [id])
         con.commit()
         con.close()
         return True
+    
+    def adopt_request(paw_id, adopt_name, adopt_email):
+        '''
+        Creates an adoption request
+        '''
+        con = sql.connect("hackypaws.db")
+        cur = con.cursor()
+        add_adopt_sql = '''INSERT INTO paw_adoption (paw_id, name, email)
+         VALUES (?, ?, ?);'''
+        cur.execute(add_adopt_sql, [paw_id, adopt_name, adopt_email])
+        con.commit()
+        con.close()
+        return True
+    
+    def get_adopt_requests(paw_id):
+        '''
+        Returns all paw adoption requests
+        '''
+        con = sql.connect("hackypaws.db")
+        cur = con.cursor()
+        get_adopt_sql = '''SELECT adopt_id, name, email FROM paw_adoption
+        WHERE paw_id = ?;'''
+        cur.execute(get_adopt_sql, [paw_id])
+        adopt_result = cur.fetchall()
+        con.close()
+        return {result[0]: {
+                "name": result[1],
+                "email": result[2]
+            } for result in adopt_result}
     
     def generate_tagline(paw):
         '''

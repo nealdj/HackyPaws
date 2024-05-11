@@ -57,6 +57,17 @@ def delete_paw(id):
     if not Authenticator.validate_session(request.cookies):
         return redirect("/auth/")
     if Paws.delete_profile(id):
-        return redirect("/")
+        return redirect("/admin")
     else:
         return "Unknown Error Occured"
+    
+@admin_bp.route("/adopt_requests/<id>")
+def adopt_requests(id):
+    # require auth
+    if not Authenticator.validate_session(request.cookies):
+        return redirect("/auth/")
+    adopt_requests = Paws.get_adopt_requests(str(id))
+
+    paw = Paws.get_profile(str(id))
+
+    return render_template("adopt_requests.html", adopt_requests=adopt_requests, paw_name=paw['name'])

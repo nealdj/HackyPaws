@@ -20,6 +20,16 @@
       <p>{{ paw['description'] }}</p>
       <br>
       <img width="50%" src="/{{paw['profile_pic']}}">
+      <br><hr>
+      <h3>Adoption Application</h3>
+      <form action="adopt/{{ paw['id'] }}" method="post">
+            <p>Name</p>
+            <input type="text" id="name" name="name" placeholder="" />
+            <p>Email</p>
+            <input type="text" id="email" name="email" placeholder="" />
+            <br>
+            <input type="submit" />
+      </form>
     </header>
   </body>
 </html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HackyPaws</title>
+    <link rel="stylesheet" href="/static/css/pico.min.css" />
+    <link rel="stylesheet" href="/static/css/hackypaws.css" />
+  </head>
+  <body>
+    <header class="container">
+      <hgroup>
+        <h1>HackyPaws Admin</h1>
+        <p>Where Every Paw is Protected</p>
+        <hr class="rounded-divider">
+      </hgroup>
+        <table>
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+                <h2>Adoption Requests for <u><i>{{paw_name}}</i></u></h2>
+              {% for req in adopt_requests %}
+              <tr>
+                <th scope="row">{{ adopt_requests[req]['name'] }}</th>
+                <td>{{ adopt_requests[req]['email'] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </header>
+  </body>
+</html>

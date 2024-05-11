@@ -20,8 +20,7 @@
       {% if paws[paw]['id'] is not divisibleby(2) %}
       <div>
         <h4>{{ paws[paw]['name'] }}</h4>
-        <p>{{ paws[paw]['description']|truncate(60,true,'') }}...</p>
-        <a href="edit/{{ paws[paw]['id'] }}"><button class="outline">Edit</button></a>
+        <a href="adopt_requests/{{ paws[paw]['id'] }}"><button class="outline">Adoption Requests</button></a>
         <a href="delete/{{ paws[paw]['id'] }}"><button class="secondary outline">Delete</button></a>
         <br><br>
         <img
@@ -37,8 +36,7 @@
       {% if paws[paw]['id'] is divisibleby(2) %}
       <div>
         <h4>{{ paws[paw]['name'] }}</h4>
-        <p>{{ paws[paw]['description']|truncate(60,true,'') }}...</p>
-        <a href="edit/{{ paws[paw]['id'] }}"><button class="outline">Edit</button></a>
+        <a href="adopt_requests/{{ paws[paw]['id'] }}"><button class="outline">Adoption Requests</button></a>
         <a href="delete/{{ paws[paw]['id'] }}"><button class="secondary outline">Delete</button></a>
         <br><br>
         <img
