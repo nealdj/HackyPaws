@@ -1,0 +1,127 @@
+import sqlite3 as sql
+
+class Paws:
+
+    def sanitize_string(unsafe_string):
+        '''
+        Makes a string safe for use within the application
+        '''
+        unsafe_characters = {
+            '<': None,'>': None,
+            }
+        translation_table = str.maketrans(unsafe_characters)
+        return unsafe_string.translate(translation_table)
+
+    def add_profile(name, uploaded_by, description, animal, profile_pic):
+        '''
+        Adds a single paw profile to the database and links the uploaded profile pic
+        '''
+        con = sql.connect("hackypaws.db")
+        cur = con.cursor()
+        add_profile_sql = '''INSERT INTO paws (name, uploaded_by, description, animal, profile_pic)
+         VALUES (?, ?, ?, ?, ?);'''
+        cur.execute(add_profile_sql, (name, uploaded_by, description, animal, profile_pic))
+        con.commit()
+        con.close()
+        return True
+
+    def get_profile(id):
+        '''
+        Returns a single Paw Profile
+        '''
+        con = sql.connect("hackypaws.db")
+        cur = con.cursor()
+        get_profile_sql = '''SELECT paw_id, uploaded_by, name, description, animal, profile_pic FROM paws
+         WHERE paw_id = ?'''
+        try:
+            cur.execute(get_profile_sql, [id])
+            profile = cur.fetchone()
+            con.close()
+        except sql.ProgrammingError:
+            return False
+        return {
+            "id": profile[0],
+            "uploaded_by": profile[1],
+            "name": profile[2],
+            "description": profile[3],
+            "animal": profile[4],
+            "profile_pic": profile[5]
+        } if profile else False
+
+    def get_all_profile():
+        '''
+        Returns all paw profiles
+        '''
+        con = sql.connect("hackypaws.db")
+        cur = con.cursor()
+        get_all_profile_sql = '''SELECT paw_id, uploaded_by, name, description, animal, profile_pic FROM paws
+         ORDER BY paw_id DESC;'''
+        cur.execute(get_all_profile_sql)
+        paws_result = cur.fetchall()
+        con.close()
+        return {result[0]: {
+                "id": result[0],
+                "uploaded_by": result[1],
+                "name": result[2],
+                "description": result[3],
+                "animal": result[4],
+                "profile_pic": result[5]
+            } for result in paws_result}
+
+    def delete_profile(id):
+        '''
+        Deletes a single paw profile
+        '''
+        con = sql.connect("hackypaws.db")
+        cur = con.cursor()
+        delete_profile_sql = 'DELETE from paws WHERE paw_id = ?;'
+        cur.execute(delete_profile_sql, [id])
+        con.commit()
+        con.close()
+        return True
+    
+    def adopt_request(paw_id, adopt_name, adopt_email):
+        '''
+        Creates an adoption request
+        '''
+        con = sql.connect("hackypaws.db")
+        cur = con.cursor()
+        add_adopt_sql = '''INSERT INTO paw_adoption (paw_id, name, email)
+         VALUES (?, ?, ?);'''
+        cur.execute(add_adopt_sql, [paw_id, adopt_name, adopt_email])
+        con.commit()
+        con.close()
+        return True
+    
+    def get_adopt_requests(paw_id):
+        '''
+        Returns all paw adoption requests
+        '''
+        con = sql.connect("hackypaws.db")
+        cur = con.cursor()
+        get_adopt_sql = '''SELECT adopt_id, name, email FROM paw_adoption
+        WHERE paw_id = ?;'''
+        cur.execute(get_adopt_sql, [paw_id])
+        adopt_result = cur.fetchall()
+        con.close()
+        return {result[0]: {
+                "name": result[1],
+                "email": result[2]
+            } for result in adopt_result}
+    
+    def generate_tagline(paw):
+        '''
+        Creates tagline for paws
+        '''
+        uploaded_by = Paws.sanitize_string(paw['uploaded_by'])
+        animal = Paws.sanitize_string(paw['animal'])
+        tagline = f"{ animal } uploaded by { uploaded_by }"
+        return tagline
+    
+    def allowed_picture(filename):
+        '''
+        Only allow safe file extensions for paw pictures
+        '''
+        ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+        return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

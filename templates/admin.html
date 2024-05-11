@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HackyPaws</title>
+    <link rel="stylesheet" href="/static/css/pico.min.css" />
+    <link rel="stylesheet" href="/static/css/hackypaws.css" />
+  </head>
+  <body>
+    <header class="container">
+      <hgroup>
+        <h1>HackyPaws Admin</h1>
+        <p>Where Every Paw is Protected</p>
+        <hr class="rounded-divider">
+      </hgroup>
+      <a href="new_paw"><button class="primary">Submit New Paw</button></a>
+      <hr class="rounded-divider">
+      <div class="grid">
+      {% for paw in paws%}
+      {% if paws[paw]['id'] is not divisibleby(2) %}
+      <div>
+        <h4>{{ paws[paw]['name'] }}</h4>
+        <a href="adopt_requests/{{ paws[paw]['id'] }}"><button class="outline">Adoption Requests</button></a>
+        <a href="delete/{{ paws[paw]['id'] }}"><button class="secondary outline">Delete</button></a>
+        <br><br>
+        <img
+          src="/{{ paws[paw]['profile_pic'] }}"
+        />
+        <hr class="rounded-divider-small">
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="grid">
+    {% for paw in paws%}
+      {% if paws[paw]['id'] is divisibleby(2) %}
+      <div>
+        <h4>{{ paws[paw]['name'] }}</h4>
+        <a href="adopt_requests/{{ paws[paw]['id'] }}"><button class="outline">Adoption Requests</button></a>
+        <a href="delete/{{ paws[paw]['id'] }}"><button class="secondary outline">Delete</button></a>
+        <br><br>
+        <img
+          src="/{{ paws[paw]['profile_pic'] }}"
+        />
+        <hr class="rounded-divider-small">
+      </div>
+      {% endif %}
+    {% endfor %}
+    </header>
+  </body>
+</html>
