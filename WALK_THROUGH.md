@@ -22,7 +22,7 @@ The files are hosted on [Google Drive](https://drive.google.com/drive/folders/1u
 Once downloaded, you can validate them with `shasum` using the the hashes above or the included shasum file.
 
 ```text
-shasum -c SHA256SUMS.sig
+$ shasum -c SHA256SUMS.sig
 
 hackypaws.mem: OK
 hackypaws.vda1: OK
