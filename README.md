@@ -107,7 +107,7 @@ Alright, this is where you come in! We're going to import the system profile and
 
 ### Loading the system profile
 
-On remnux, copy the system profile downloaded from google drive to the correct location where volitility can read it.
+On remnux, copy the system profile downloaded from google drive to the correct location where volatility can read it.
 
 ```text
 cp vmlinux-5.4.0-182-generic.json /usr/local/lib/python3.8/dist-packages/volatility3/framework/symbols/
@@ -411,7 +411,7 @@ From all this, we can discern that these two endpoints are where the bug may be,
 
 Armed with all the context and knowledge we've gained, this is going to be a targeted review of the paws and admin endpoints.
 
-Starting off, lets sww what's in main.py.
+Starting off, lets see what's in main.py.
 
 ```text
 sudo cat /mnt/hackypaws/opt/hackypaws/main.py
@@ -471,7 +471,7 @@ So thats our bug! However, something doesn't really add up, somehow they sent an
 
 #### Authentication Bypass
 
-When digging for auth bypass bugs, there's a few common locations and bug classes that can be fouund.
+When digging for auth bypass bugs, there's a few common locations and bug classes that can be found.
 
 - Improper pw reset/signup
 - Injection in login form
